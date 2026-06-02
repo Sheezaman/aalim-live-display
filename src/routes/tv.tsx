@@ -129,29 +129,10 @@ function TvPage() {
                 }
               >
                 <p
-                  dir="rtl"
-                  lang="ar"
                   className={
                     isCurrent
-                      ? "text-right font-medium leading-[1.6] text-primary text-5xl"
-                      : "text-right leading-[1.5] text-primary/70 text-2xl"
-                  }
-                  style={{ fontFamily: "'Noto Naskh Arabic', 'Amiri', serif" }}
-                >
-                  {seg.ar}
-                </p>
-                <div
-                  className={
-                    isCurrent
-                      ? "my-6 h-px w-full bg-gradient-to-r from-transparent via-primary/25 to-transparent"
-                      : "my-3 h-px w-full bg-border/60"
-                  }
-                />
-                <p
-                  className={
-                    isCurrent
-                      ? "text-foreground text-3xl leading-snug"
-                      : "text-muted-foreground text-lg leading-snug"
+                      ? "text-foreground text-5xl font-medium leading-tight"
+                      : "text-muted-foreground text-2xl leading-snug"
                   }
                 >
                   {seg.en}
