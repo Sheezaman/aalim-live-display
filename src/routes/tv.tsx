@@ -108,59 +108,56 @@ function TvPage() {
       </header>
 
       {/* Translation stack */}
-      <section className="relative z-10 mx-auto flex max-w-6xl flex-col justify-end gap-6 px-10 pb-44 pt-16 min-h-[80vh]">
+      {/* Translation stack */}
+      <section className="relative z-10 mx-auto flex min-h-[78vh] max-w-5xl flex-col items-center justify-center gap-5 px-10 text-center">
         <AnimatePresence initial={false}>
           {visible.map((seg, i) => {
             const isCurrent = i === visible.length - 1;
             const depth = visible.length - 1 - i; // 0 current, 1 prev, 2 oldest
-            const opacity = isCurrent ? 1 : depth === 1 ? 0.45 : 0.22;
             return (
-              <motion.article
+              <motion.p
                 key={seg.id}
                 layout
-                initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
-                animate={{ opacity, y: 0, filter: "blur(0px)" }}
-                exit={{ opacity: 0, y: -16, filter: "blur(6px)" }}
+                initial={{ opacity: 0, y: 28, filter: "blur(8px)" }}
+                animate={{
+                  opacity: isCurrent ? 1 : depth === 1 ? 0.42 : 0.2,
+                  y: 0,
+                  filter: "blur(0px)",
+                }}
+                exit={{ opacity: 0, y: -20, filter: "blur(8px)" }}
                 transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                 className={
                   isCurrent
-                    ? "rounded-3xl border border-primary/15 bg-card p-10 shadow-[0_30px_80px_-40px_oklch(0.38_0.11_155/0.45)]"
-                    : "rounded-2xl border border-border/60 bg-card/40 p-6"
+                    ? "max-w-4xl text-balance text-6xl font-bold leading-[1.15] tracking-tight text-foreground"
+                    : "max-w-3xl text-balance text-3xl font-medium leading-snug text-muted-foreground"
                 }
               >
-                <p
-                  className={
-                    isCurrent
-                      ? "text-foreground text-5xl font-medium leading-tight"
-                      : "text-muted-foreground text-2xl leading-snug"
-                  }
-                >
-                  {seg.en}
-                </p>
-              </motion.article>
+                {seg.en}
+              </motion.p>
             );
           })}
         </AnimatePresence>
       </section>
 
       {/* QR section */}
-      <aside className="fixed bottom-8 right-8 z-20 flex items-center gap-5 rounded-2xl border border-border bg-card/95 p-5 pr-7 shadow-[0_20px_60px_-30px_oklch(0.38_0.11_155/0.4)] backdrop-blur">
-        <div className="rounded-xl bg-background p-3 ring-1 ring-primary/15">
+      <aside className="fixed bottom-8 right-8 z-20 flex items-center gap-4 rounded-2xl bg-primary p-4 pr-6 text-primary-foreground shadow-[0_20px_60px_-25px_oklch(0.38_0.11_155/0.55)]">
+        <div className="rounded-lg bg-white p-2">
           <QRCodeSVG
             value="https://aalim.app/live"
-            size={120}
-            fgColor="#1f5a35"
-            bgColor="transparent"
+            size={110}
+            fgColor="#0a0a0a"
+            bgColor="#ffffff"
             level="M"
           />
         </div>
-        <div className="max-w-[180px]">
-          <div className="text-base font-semibold text-primary">
-            Listen in Your Language
+        <div className="max-w-[120px]">
+          <div className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] opacity-95">
+            <span aria-hidden>🎧</span>
+            <span>Listen on</span>
           </div>
-          <p className="mt-1 text-xs leading-snug text-muted-foreground">
-            Scan to follow the live Khutbah translation on your phone.
-          </p>
+          <div className="text-[11px] font-semibold uppercase tracking-[0.16em] opacity-95">
+            Your Phone
+          </div>
         </div>
       </aside>
     </main>
