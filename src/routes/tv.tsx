@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { Maximize2, Minimize2 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { QRCodeSVG } from "qrcode.react";
 import logo from "@/assets/aalim-logo.png.asset.json";
@@ -59,6 +60,7 @@ const INTERVAL_MS = 5500;
 
 function TvPage() {
   const [index, setIndex] = useState(0);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
     const t = setInterval(() => {
@@ -66,6 +68,21 @@ function TvPage() {
     }, INTERVAL_MS);
     return () => clearInterval(t);
   }, []);
+
+  useEffect(() => {
+    const onChange = () =>
+      setIsFullscreen(Boolean(document.fullscreenElement));
+    document.addEventListener("fullscreenchange", onChange);
+    return () => document.removeEventListener("fullscreenchange", onChange);
+  }, []);
+
+  const toggleFullscreen = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    } else {
+      document.documentElement.requestFullscreen().catch(() => {});
+    }
+  };
 
   // Build the visible stack: oldest first, current last.
   const visible: Segment[] = [];
@@ -87,27 +104,34 @@ function TvPage() {
       />
 
       {/* Header */}
-      <header className="relative z-10 flex items-center justify-between px-10 pt-8">
-        <div className="flex items-center gap-3">
-          <div className="h-2 w-2 animate-pulse rounded-full bg-primary" />
-          <span className="text-sm font-medium uppercase tracking-[0.2em] text-primary">
-            Live · Khutbah Translation
+      <header className="relative z-10 grid grid-cols-3 items-center px-10 pt-8">
+        <div className="flex items-center gap-3 justify-self-start">
+          <img src={logo.url} alt="Aalim" className="h-9 w-9 object-contain" />
+          <span className="text-lg font-semibold tracking-tight text-primary">
+            Aalim
           </span>
         </div>
-        <div className="flex items-center gap-3 rounded-full border border-border bg-card/80 px-4 py-2 shadow-sm backdrop-blur">
-          <img src={logo.url} alt="Aalim" className="h-9 w-9 object-contain" />
-          <div className="leading-tight">
-            <div className="text-base font-semibold tracking-tight text-primary">
-              Aalim
-            </div>
-            <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-              Live Translate
-            </div>
-          </div>
+        <div className="flex items-center justify-center gap-2">
+          <span className="h-2 w-2 animate-pulse rounded-full bg-primary" />
+          <span className="text-xs font-semibold uppercase tracking-[0.24em] text-primary">
+            Live
+          </span>
         </div>
+        <button
+          type="button"
+          onClick={toggleFullscreen}
+          aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+          className="justify-self-end inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-4 py-2 text-sm font-medium text-foreground shadow-sm backdrop-blur transition hover:border-primary/40 hover:text-primary"
+        >
+          {isFullscreen ? (
+            <Minimize2 className="h-4 w-4" />
+          ) : (
+            <Maximize2 className="h-4 w-4" />
+          )}
+          <span>{isFullscreen ? "Exit Fullscreen" : "Fullscreen"}</span>
+        </button>
       </header>
 
-      {/* Translation stack */}
       {/* Translation stack */}
       <section className="relative z-10 mx-auto flex min-h-[78vh] max-w-5xl flex-col items-center justify-center gap-5 px-10 text-center">
         <AnimatePresence initial={false}>
