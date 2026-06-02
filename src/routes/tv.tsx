@@ -174,13 +174,12 @@ function TvPage() {
             level="M"
           />
         </div>
-        <div className="max-w-[120px]">
-          <div className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] opacity-95">
-            <span aria-hidden>🎧</span>
-            <span>Listen on</span>
+        <div className="max-w-[140px]">
+          <div className="text-[12px] font-semibold uppercase tracking-[0.14em] opacity-95">
+            Translate to
           </div>
-          <div className="text-[11px] font-semibold uppercase tracking-[0.16em] opacity-95">
-            Your Phone
+          <div className="text-[12px] font-semibold uppercase tracking-[0.14em] opacity-95">
+            My Language
           </div>
         </div>
       </aside>
