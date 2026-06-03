@@ -85,6 +85,16 @@ function TvPage() {
     }
   };
 
+  const increaseSize = () => setScale((s) => Math.min(s + 0.15, 2));
+  const decreaseSize = () => setScale((s) => Math.max(s - 0.15, 0.5));
+
+  // Derived sizes from scale (base = current default)
+  const currentSize = 2.25 * scale;   // rem: text-4xl ≈ 36px at default
+  const prevSize = 1.5 * scale;       // rem: text-2xl ≈ 24px at default
+  const lineGap = 1.5 * scale;        // rem: gap-6 ≈ 24px at default
+  const currentLeading = Math.max(1.15, 1.2 - (scale - 1) * 0.05);
+  const prevLeading = Math.max(1.25, 1.375 - (scale - 1) * 0.05);
+
   // Build the visible stack: oldest first, current last.
   const visible: Segment[] = [];
   for (let offset = MAX_VISIBLE - 1; offset >= 0; offset--) {
