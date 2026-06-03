@@ -132,19 +132,42 @@ function TvPage() {
             Live
           </span>
         </div>
-        <button
-          type="button"
-          onClick={toggleFullscreen}
-          aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
-          className="justify-self-end inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-5 py-2.5 text-base font-medium text-foreground shadow-sm backdrop-blur transition hover:border-primary/40 hover:text-primary"
-        >
-          {isFullscreen ? (
-            <Minimize2 className="h-5 w-5" />
-          ) : (
-            <Maximize2 className="h-5 w-5" />
-          )}
-          <span>{isFullscreen ? "Exit Fullscreen" : "Fullscreen"}</span>
-        </button>
+        <div className="flex items-center gap-3 justify-self-end">
+          <div className="flex items-center gap-1 rounded-full border border-border bg-card/80 px-1 py-1 shadow-sm backdrop-blur">
+            <button
+              type="button"
+              onClick={decreaseSize}
+              aria-label="Decrease text size"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold text-foreground transition hover:bg-primary/10 hover:text-primary"
+            >
+              <Minus className="h-4 w-4" />
+            </button>
+            <span className="w-8 text-center text-sm font-semibold tabular-nums text-foreground">
+              {Math.round(scale * 100)}%
+            </span>
+            <button
+              type="button"
+              onClick={increaseSize}
+              aria-label="Increase text size"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold text-foreground transition hover:bg-primary/10 hover:text-primary"
+            >
+              <Plus className="h-4 w-4" />
+            </button>
+          </div>
+          <button
+            type="button"
+            onClick={toggleFullscreen}
+            aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+            className="inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-5 py-2.5 text-base font-medium text-foreground shadow-sm backdrop-blur transition hover:border-primary/40 hover:text-primary"
+          >
+            {isFullscreen ? (
+              <Minimize2 className="h-5 w-5" />
+            ) : (
+              <Maximize2 className="h-5 w-5" />
+            )}
+            <span>{isFullscreen ? "Exit Fullscreen" : "Fullscreen"}</span>
+          </button>
+        </div>
       </header>
 
       {/* Translation stack */}
