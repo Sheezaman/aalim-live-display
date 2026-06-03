@@ -171,7 +171,10 @@ function TvPage() {
       </header>
 
       {/* Translation stack */}
-      <section className="relative z-10 mx-auto flex min-h-[78vh] max-w-[1400px] flex-col items-center justify-center gap-6 px-20 pb-48 text-center">
+      <section
+        className="relative z-10 mx-auto flex min-h-[78vh] max-w-[1400px] flex-col items-center justify-center px-20 pb-48 text-center"
+        style={{ gap: `${lineGap}rem` }}
+      >
         <AnimatePresence initial={false}>
           {visible.map((seg, i) => {
             const isCurrent = i === visible.length - 1;
@@ -190,8 +193,19 @@ function TvPage() {
                 transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                 className={
                   isCurrent
-                    ? "max-w-[1200px] text-balance text-4xl font-bold leading-[1.2] tracking-tight text-foreground"
-                    : "max-w-[1000px] text-balance text-2xl font-medium leading-snug text-muted-foreground"
+                    ? "max-w-[1200px] text-balance font-bold tracking-tight text-foreground"
+                    : "max-w-[1000px] text-balance font-medium text-muted-foreground"
+                }
+                style={
+                  isCurrent
+                    ? {
+                        fontSize: `${currentSize}rem`,
+                        lineHeight: currentLeading,
+                      }
+                    : {
+                        fontSize: `${prevSize}rem`,
+                        lineHeight: prevLeading,
+                      }
                 }
               >
                 {seg.en}
