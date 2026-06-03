@@ -61,6 +61,7 @@ const INTERVAL_MS = 5500;
 function TvPage() {
   const [index, setIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [scale, setScale] = useState(1);
 
   useEffect(() => {
     const t = setInterval(() => {
