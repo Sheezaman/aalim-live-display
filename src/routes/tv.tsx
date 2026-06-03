@@ -104,20 +104,20 @@ function TvPage() {
       />
 
       {/* Header */}
-      <header className="relative z-10 grid grid-cols-3 items-center px-4 pt-4 sm:px-8 sm:pt-6 lg:px-12 lg:pt-10">
-        <div className="flex items-center gap-3 justify-self-start">
+      <header className="relative z-10 grid grid-cols-3 items-center px-16 pt-12">
+        <div className="flex items-center gap-4 justify-self-start">
           <img
             src={logo.url}
             alt="Aalim"
-            className="h-8 w-8 object-contain sm:h-10 sm:w-10 lg:h-14 lg:w-14"
+            className="h-16 w-16 object-contain"
           />
-          <span className="text-base font-semibold tracking-tight text-primary sm:text-lg lg:text-2xl">
+          <span className="text-3xl font-semibold tracking-tight text-primary">
             Aalim
           </span>
         </div>
-        <div className="flex items-center justify-center gap-2">
-          <span className="h-2 w-2 animate-pulse rounded-full bg-primary lg:h-3 lg:w-3" />
-          <span className="text-[10px] font-semibold uppercase tracking-[0.24em] text-primary sm:text-xs lg:text-base">
+        <div className="flex items-center justify-center gap-3">
+          <span className="h-3 w-3 animate-pulse rounded-full bg-primary" />
+          <span className="text-lg font-semibold uppercase tracking-[0.28em] text-primary">
             Live
           </span>
         </div>
@@ -125,21 +125,19 @@ function TvPage() {
           type="button"
           onClick={toggleFullscreen}
           aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
-          className="justify-self-end inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-3 py-1.5 text-xs font-medium text-foreground shadow-sm backdrop-blur transition hover:border-primary/40 hover:text-primary sm:px-4 sm:py-2 sm:text-sm lg:px-5 lg:py-2.5 lg:text-base"
+          className="justify-self-end inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-5 py-2.5 text-base font-medium text-foreground shadow-sm backdrop-blur transition hover:border-primary/40 hover:text-primary"
         >
           {isFullscreen ? (
-            <Minimize2 className="h-4 w-4 lg:h-5 lg:w-5" />
+            <Minimize2 className="h-5 w-5" />
           ) : (
-            <Maximize2 className="h-4 w-4 lg:h-5 lg:w-5" />
+            <Maximize2 className="h-5 w-5" />
           )}
-          <span className="hidden sm:inline">
-            {isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
-          </span>
+          <span>{isFullscreen ? "Exit Fullscreen" : "Fullscreen"}</span>
         </button>
       </header>
 
       {/* Translation stack */}
-      <section className="relative z-10 mx-auto flex min-h-[78vh] max-w-6xl flex-col items-center justify-center gap-4 px-6 pb-44 text-center sm:gap-5 sm:px-10 sm:pb-32 lg:gap-8 lg:pb-16">
+      <section className="relative z-10 mx-auto flex min-h-[80vh] max-w-[1600px] flex-col items-center justify-center gap-10 px-20 text-center">
         <AnimatePresence initial={false}>
           {visible.map((seg, i) => {
             const isCurrent = i === visible.length - 1;
@@ -158,8 +156,8 @@ function TvPage() {
                 transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                 className={
                   isCurrent
-                    ? "max-w-5xl text-balance text-3xl font-bold leading-[1.2] tracking-tight text-foreground sm:text-5xl lg:text-7xl xl:text-8xl"
-                    : "max-w-4xl text-balance text-lg font-medium leading-snug text-muted-foreground sm:text-2xl lg:text-4xl"
+                    ? "max-w-[1400px] text-balance text-6xl font-bold leading-[1.15] tracking-tight text-foreground"
+                    : "max-w-[1200px] text-balance text-3xl font-medium leading-snug text-muted-foreground"
                 }
               >
                 {seg.en}
@@ -170,19 +168,18 @@ function TvPage() {
       </section>
 
       {/* QR section */}
-      <aside className="fixed bottom-4 right-4 z-20 flex items-center gap-3 rounded-2xl bg-primary p-3 pr-4 text-primary-foreground shadow-[0_20px_60px_-25px_oklch(0.38_0.11_155/0.55)] sm:bottom-6 sm:right-6 sm:gap-4 sm:p-4 sm:pr-6 lg:bottom-10 lg:right-10 lg:gap-5 lg:p-5 lg:pr-7">
-        <div className="rounded-lg bg-white p-1.5 sm:p-2 lg:p-2.5">
+      <aside className="fixed bottom-10 right-10 z-20 flex items-center gap-5 rounded-2xl bg-primary p-5 pr-7 text-primary-foreground shadow-[0_20px_60px_-25px_oklch(0.38_0.11_155/0.55)]">
+        <div className="rounded-lg bg-white p-2.5">
           <QRCodeSVG
             value="https://aalim.app/live"
-            size={72}
+            size={160}
             fgColor="#0a0a0a"
             bgColor="#ffffff"
             level="M"
-            className="h-[72px] w-[72px] sm:h-[110px] sm:w-[110px] lg:h-[160px] lg:w-[160px]"
           />
         </div>
-        <div className="max-w-[110px] sm:max-w-[140px] lg:max-w-[200px]">
-          <div className="text-[11px] font-semibold uppercase leading-tight tracking-[0.14em] opacity-95 sm:text-[12px] lg:text-base">
+        <div className="max-w-[200px]">
+          <div className="text-base font-semibold uppercase leading-tight tracking-[0.14em] opacity-95">
             Translate to My Language
           </div>
         </div>
