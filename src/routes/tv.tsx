@@ -137,7 +137,7 @@ function TvPage() {
       </header>
 
       {/* Translation stack */}
-      <section className="relative z-10 mx-auto flex min-h-[80vh] max-w-[1600px] flex-col items-center justify-center gap-10 px-20 text-center">
+      <section className="relative z-10 mx-auto flex min-h-[78vh] max-w-[1400px] flex-col items-center justify-center gap-6 px-20 pb-48 text-center">
         <AnimatePresence initial={false}>
           {visible.map((seg, i) => {
             const isCurrent = i === visible.length - 1;
@@ -156,8 +156,8 @@ function TvPage() {
                 transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                 className={
                   isCurrent
-                    ? "max-w-[1400px] text-balance text-6xl font-bold leading-[1.15] tracking-tight text-foreground"
-                    : "max-w-[1200px] text-balance text-3xl font-medium leading-snug text-muted-foreground"
+                    ? "max-w-[1200px] text-balance text-4xl font-bold leading-[1.2] tracking-tight text-foreground"
+                    : "max-w-[1000px] text-balance text-2xl font-medium leading-snug text-muted-foreground"
                 }
               >
                 {seg.en}
@@ -168,18 +168,18 @@ function TvPage() {
       </section>
 
       {/* QR section */}
-      <aside className="fixed bottom-10 right-10 z-20 flex items-center gap-5 rounded-2xl bg-primary p-5 pr-7 text-primary-foreground shadow-[0_20px_60px_-25px_oklch(0.38_0.11_155/0.55)]">
-        <div className="rounded-lg bg-white p-2.5">
+      <aside className="fixed bottom-8 right-8 z-20 flex items-center gap-4 rounded-2xl bg-primary p-3 pr-5 text-primary-foreground shadow-[0_20px_60px_-25px_oklch(0.38_0.11_155/0.55)]">
+        <div className="rounded-lg bg-white p-2">
           <QRCodeSVG
             value="https://aalim.app/live"
-            size={160}
+            size={104}
             fgColor="#0a0a0a"
             bgColor="#ffffff"
             level="M"
           />
         </div>
-        <div className="max-w-[200px]">
-          <div className="text-base font-semibold uppercase leading-tight tracking-[0.14em] opacity-95">
+        <div className="max-w-[140px]">
+          <div className="text-xs font-semibold uppercase leading-tight tracking-[0.14em] opacity-95">
             Translate to My Language
           </div>
         </div>
