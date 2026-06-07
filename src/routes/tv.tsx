@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Maximize2, Minimize2, Minus, Plus } from "lucide-react";
+import { Maximize2, Minimize2, Minus, Plus, RectangleHorizontal, RectangleVertical } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { QRCodeSVG } from "qrcode.react";
 import logo from "@/assets/aalim-logo.png.asset.json";
@@ -62,6 +62,7 @@ function TvPage() {
   const [index, setIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [scale, setScale] = useState(1);
+  const [isPortrait, setIsPortrait] = useState(false);
 
   useEffect(() => {
     const t = setInterval(() => {
@@ -87,11 +88,13 @@ function TvPage() {
 
   const increaseSize = () => setScale((s) => Math.min(s + 0.15, 2));
   const decreaseSize = () => setScale((s) => Math.max(s - 0.15, 0.5));
+  const toggleOrientation = () => setIsPortrait((p) => !p);
 
   // Derived sizes from scale (base = current default)
-  const currentSize = 2.25 * scale;   // rem: text-4xl ≈ 36px at default
-  const prevSize = 1.5 * scale;       // rem: text-2xl ≈ 24px at default
-  const lineGap = 1.5 * scale;        // rem: gap-6 ≈ 24px at default
+  const orientationFactor = isPortrait ? 1.35 : 1; // bigger text on tall screens
+  const currentSize = 2.25 * scale * orientationFactor;
+  const prevSize = 1.5 * scale * orientationFactor;
+  const lineGap = 1.5 * scale * orientationFactor;
   const currentLeading = Math.max(1.15, 1.2 - (scale - 1) * 0.05);
   const prevLeading = Math.max(1.25, 1.375 - (scale - 1) * 0.05);
 
@@ -156,6 +159,19 @@ function TvPage() {
           </div>
           <button
             type="button"
+            onClick={toggleOrientation}
+            aria-label={isPortrait ? "Switch to landscape" : "Switch to portrait"}
+            className="inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-5 py-2.5 text-base font-medium text-foreground shadow-sm backdrop-blur transition hover:border-primary/40 hover:text-primary"
+          >
+            {isPortrait ? (
+              <RectangleHorizontal className="h-5 w-5" />
+            ) : (
+              <RectangleVertical className="h-5 w-5" />
+            )}
+            <span>{isPortrait ? "Landscape" : "Portrait"}</span>
+          </button>
+          <button
+            type="button"
             onClick={toggleFullscreen}
             aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
             className="inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-5 py-2.5 text-base font-medium text-foreground shadow-sm backdrop-blur transition hover:border-primary/40 hover:text-primary"
@@ -172,7 +188,11 @@ function TvPage() {
 
       {/* Translation stack */}
       <section
-        className="relative z-10 mx-auto flex min-h-[78vh] max-w-[1400px] flex-col items-center justify-center px-20 pb-48 text-center"
+        className={
+          isPortrait
+            ? "relative z-10 mx-auto flex min-h-[80vh] max-w-[900px] flex-col items-center justify-center px-12 pb-[22rem] text-center"
+            : "relative z-10 mx-auto flex min-h-[78vh] max-w-[1400px] flex-col items-center justify-center px-20 pb-48 text-center"
+        }
         style={{ gap: `${lineGap}rem` }}
       >
         <AnimatePresence initial={false}>
@@ -193,8 +213,12 @@ function TvPage() {
                 transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                 className={
                   isCurrent
-                    ? "max-w-[1200px] text-balance font-bold tracking-tight text-foreground"
-                    : "max-w-[1000px] text-balance font-medium text-muted-foreground"
+                    ? (isPortrait
+                        ? "max-w-[820px] text-balance font-bold tracking-tight text-foreground"
+                        : "max-w-[1200px] text-balance font-bold tracking-tight text-foreground")
+                    : (isPortrait
+                        ? "max-w-[760px] text-balance font-medium text-muted-foreground"
+                        : "max-w-[1000px] text-balance font-medium text-muted-foreground")
                 }
                 style={
                   isCurrent
@@ -216,22 +240,39 @@ function TvPage() {
       </section>
 
       {/* QR section */}
-      <aside className="fixed bottom-8 right-8 z-20 flex items-center gap-4 rounded-2xl bg-primary p-3 pr-5 text-primary-foreground shadow-[0_20px_60px_-25px_oklch(0.38_0.11_155/0.55)]">
-        <div className="rounded-lg bg-white p-2">
-          <QRCodeSVG
-            value="https://aalim.app/live"
-            size={104}
-            fgColor="#0a0a0a"
-            bgColor="#ffffff"
-            level="M"
-          />
-        </div>
-        <div className="max-w-[140px]">
-          <div className="text-xs font-semibold uppercase leading-tight tracking-[0.14em] opacity-95">
+      {isPortrait ? (
+        <aside className="fixed bottom-10 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-3 rounded-2xl bg-primary p-5 text-primary-foreground shadow-[0_20px_60px_-25px_oklch(0.38_0.11_155/0.55)]">
+          <div className="rounded-lg bg-white p-3">
+            <QRCodeSVG
+              value="https://aalim.app/live"
+              size={180}
+              fgColor="#0a0a0a"
+              bgColor="#ffffff"
+              level="M"
+            />
+          </div>
+          <div className="text-center text-sm font-semibold uppercase leading-tight tracking-[0.18em] opacity-95">
             Translate to My Language
           </div>
-        </div>
-      </aside>
+        </aside>
+      ) : (
+        <aside className="fixed bottom-8 right-8 z-20 flex items-center gap-4 rounded-2xl bg-primary p-3 pr-5 text-primary-foreground shadow-[0_20px_60px_-25px_oklch(0.38_0.11_155/0.55)]">
+          <div className="rounded-lg bg-white p-2">
+            <QRCodeSVG
+              value="https://aalim.app/live"
+              size={104}
+              fgColor="#0a0a0a"
+              bgColor="#ffffff"
+              level="M"
+            />
+          </div>
+          <div className="max-w-[140px]">
+            <div className="text-xs font-semibold uppercase leading-tight tracking-[0.14em] opacity-95">
+              Translate to My Language
+            </div>
+          </div>
+        </aside>
+      )}
     </main>
   );
 }
